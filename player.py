@@ -1,6 +1,7 @@
 import pygame
 from circleshape import CircleShape
 from shot import Shot
+from score import Score
 from constants import *
 
 
@@ -9,6 +10,7 @@ class Player(CircleShape):
         super().__init__(x,y, PLAYER_RADIUS)
         self.rotation = 0
         self.shoot_timer = 0
+        self.score = Score()
 
 
         # in the player class
@@ -51,3 +53,7 @@ class Player(CircleShape):
         shot = Shot(self.position.x, self.position.y)
         shot.velocity = pygame.Vector2(0,1 ).rotate(self.rotation) * PLAYER_SHOOT_SPEED
         self.shoot_timer = PLAYER_SHOOT_COOLDOWN
+
+    def add_score(self, added_value):
+        self.score.add_score(added_value)
+        print(f"Current Score: {self.score}")
