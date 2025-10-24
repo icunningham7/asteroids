@@ -2,7 +2,6 @@
 # the open-source pygame library
 # throughout this file
 import pygame
-import sys
 from constants import *
 from player import Player
 from score import Score
@@ -40,8 +39,8 @@ def main():
 
         for asteroid in asteroids:
             if (asteroid.collides_with(player)):
-                print("Game over!")
-                sys.exit()
+                player.take_damage()
+                asteroid.kill()
             for shot in shots:
                 if asteroid.collides_with(shot):
                     score = asteroid.split()

@@ -1,3 +1,4 @@
+import sys
 import pygame
 from circleshape import CircleShape
 from shot import Shot
@@ -10,7 +11,9 @@ class Player(CircleShape):
         super().__init__(x,y, PLAYER_RADIUS)
         self.rotation = 0
         self.shoot_timer = 0
+        self.invulnerable_timer = 0
         self.score = Score()
+        self.extra_lives = 3
 
 
         # in the player class
@@ -27,6 +30,8 @@ class Player(CircleShape):
 
     def update(self, dt):
         self.shoot_timer -= dt
+        if self.invulnerable_timer > 0:
+            self.invulnerable_timer -= dt
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_a]:
@@ -57,3 +62,18 @@ class Player(CircleShape):
     def add_score(self, added_value):
         self.score.add_score(added_value)
         print(f"Current Score: {self.score}")
+
+    def lose_life(self):
+        if self.extra_lives == 0:
+            sys.exit()
+        
+        self.position = pygame.Vector2(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
+        self.rotation = 0
+        self.extra_lives -= 1
+        self.invulnerable_timer = PLAYER_INVULNERABLE_COOLDOWN
+        print(f"Lives Remaining: {self.extra_lives}")
+    
+    
+    def take_damage(self):
+        if self.invulnerable_timer <= 0:
+            self.lose_life()
