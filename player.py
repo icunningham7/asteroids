@@ -32,25 +32,26 @@ class Player(CircleShape):
         self.shoot_timer -= dt
         if self.invulnerable_timer > 0:
             self.invulnerable_timer -= dt
+        self.position += self.velocity
         keys = pygame.key.get_pressed()
+
 
         if keys[pygame.K_a]:
             self.rotate(-dt)
         if keys[pygame.K_d]:
             self.rotate(dt)
         if keys[pygame.K_w]:
-            self.move(dt)
+            self.accelerate(dt)
         if keys[pygame.K_s]:
-            self.move(-dt)
+            self.accelerate(-dt)
         if keys[pygame.K_SPACE]:
             self.shoot()
 
     def rotate(self, dt):
         self.rotation += PLAYER_TURN_SPEED * dt
 
-    def move(self, dt):
-        forward = pygame.Vector2(0, 1).rotate(self.rotation)
-        self.position += forward * PLAYER_SPEED * dt
+    def accelerate(self, dt):
+        self.velocity += pygame.Vector2(0, 1).rotate(self.rotation) * PLAYER_SPEED * dt
 
     def shoot(self):
         if self.shoot_timer > 0:
@@ -68,6 +69,7 @@ class Player(CircleShape):
             sys.exit()
         
         self.position = pygame.Vector2(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
+        self.velocity = pygame.Vector2(0,0)
         self.rotation = 0
         self.extra_lives -= 1
         self.invulnerable_timer = PLAYER_INVULNERABLE_COOLDOWN
