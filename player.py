@@ -3,6 +3,7 @@ import pygame
 from circleshape import CircleShape
 from shot import Shot
 from score import Score
+from lives import Lives
 from constants import *
 
 
@@ -13,7 +14,7 @@ class Player(CircleShape):
         self.shoot_timer = 0
         self.invulnerable_timer = 0
         self.score = Score()
-        self.extra_lives = 3
+        self.lives = Lives()
 
 
         # in the player class
@@ -65,15 +66,13 @@ class Player(CircleShape):
         print(f"Current Score: {self.score}")
 
     def lose_life(self):
-        if self.extra_lives == 0:
-            sys.exit()
+        self.lives.lose_life()
         
         self.position = pygame.Vector2(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
         self.velocity = pygame.Vector2(0,0)
         self.rotation = 0
-        self.extra_lives -= 1
         self.invulnerable_timer = PLAYER_INVULNERABLE_COOLDOWN
-        print(f"Lives Remaining: {self.extra_lives}")
+        print(f"Lives Remaining: {self.lives}")
     
     
     def take_damage(self):

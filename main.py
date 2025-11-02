@@ -19,7 +19,7 @@ def main():
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
     shots = pygame.sprite.Group()
-    score = pygame.sprite.Group()
+    hud = pygame.sprite.Group()
     
     Player.containers = (updatable, drawable, blitable)
     Asteroid.containers = (asteroids, updatable, drawable)
@@ -53,6 +53,7 @@ def main():
             obj.draw(screen)
         
         player.score.blit(screen)
+        player.lives.blit(screen)
 
         pygame.display.flip()
         dt = clock.tick(60) / 1000
