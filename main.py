@@ -37,6 +37,16 @@ def main():
                 return
         updatable.update(dt)
 
+        for drawn in drawable:
+            if drawn.position[0] + drawn.radius < 0:
+                drawn.position = pygame.Vector2(SCREEN_WIDTH, drawn.position[1])
+            if drawn.position[0] - drawn.radius > SCREEN_WIDTH:
+                drawn.position = pygame.Vector2(0, drawn.position[1])
+            if drawn.position[1] + drawn.radius < 0:
+                drawn.position = pygame.Vector2(drawn.position[0], SCREEN_HEIGHT)
+            if drawn.position[1] - drawn.radius > SCREEN_HEIGHT:
+                drawn.position = pygame.Vector2(drawn.position[0], 0)
+
         for asteroid in asteroids:
             if (asteroid.collides_with(player)):
                 player.take_damage()
