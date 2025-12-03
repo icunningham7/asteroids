@@ -5,6 +5,7 @@ import pygame
 from constants import *
 from player import Player
 from score import Score
+from level import Level
 from shot import Shot
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
@@ -63,6 +64,7 @@ def main():
             obj.draw(screen)
         
         player.score.blit(screen)
+        player.level.blit(screen)
         player.lives.blit(screen)
 
         pygame.display.flip()

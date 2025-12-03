@@ -12,7 +12,7 @@ class Score:
     def blit(self, screen):
         font = pygame.font.SysFont('Arial', 30)
         score_display = font.render(f"Score: {self.value}", True, (255, 255, 255))
-        pygame.Surface.blit(screen, score_display, (5, 5))
+        pygame.Surface.blit(screen, score_display, (5, SCREEN_HEIGHT - 35))
 
     def add_score(self, added_value):
         self.value += added_value
